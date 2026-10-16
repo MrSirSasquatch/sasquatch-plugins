@@ -9,11 +9,15 @@ description: Apply personal coding preferences when writing, refactoring, or rev
 
 - Prefer descriptive variable names over short or abbreviated names. Add words only when they improve clarity.
 - Prefer `var shoppingCart = new ShoppingCart();` over `var sc = new ShoppingCart();`.
+- Avoid generic variable and method names: prefer `customerData`, `configFileStream`, and `ProcessEvent()` over `data`, `stream`, and `Process()`.
 
 ## Design
 
 - Unless explicitly instructed otherwise, follow established coding practices, including SOLID and clean code principles where applicable.
 - Keep designs simple; introduce abstractions for current requirements rather than hypothetical future needs.
+- Avoid god classes that accumulate unrelated responsibilities. Keep classes focused on a cohesive purpose.
+- Avoid primitive obsession: when a method takes several related primitive parameters, group them into a meaningful domain or parameter object, such as `Address` instead of separate street, city, and postcode strings. Keep simple independent values as primitives.
+- Keep functions short and focused. Treat functions of 100 or more lines as a signal to review their responsibilities and extract cohesive operations where it improves clarity.
 
 ## Testing
 
