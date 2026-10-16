@@ -1,0 +1,11 @@
+version: '3'
+
+tasks:
+  install:
+    desc: Install or update the global Code skill from this checkout
+    dir: '{{.ROOT_DIR}}'
+    preconditions:
+      - sh: command -v apm
+        msg: APM must be installed and available on PATH.
+    cmds:
+      - apm install --global "{{.ROOT_DIR}}/plugins/code/.apm/skills/code" --target claude,codex,copilot

@@ -7,47 +7,31 @@ description: Apply personal coding preferences when writing, refactoring, or rev
 
 ## Code Style
 
-**Variable Naming:**
-Prefer descriptive more verbose variable names over short or abbreviated names.
-
-Bad => `var sc = new ShoppingCart();`
-Good => `var shoppingCart = new Customer();`
+- Prefer descriptive variable names over short or abbreviated names. Add words only when they improve clarity.
+- Prefer `var shoppingCart = new ShoppingCart();` over `var sc = new ShoppingCart();`.
 
 ## Design
 
- - Unless explicitly instructed, follow industry recognised best coding practices
- - SOLID principals
- - Clean code principals
+- Unless explicitly instructed otherwise, follow established coding practices, including SOLID and clean code principles where applicable.
+- Keep designs simple; introduce abstractions for current requirements rather than hypothetical future needs.
 
 ## Testing
 
- - Use test-driven development when implementing changes
- - For new code, create a failing test with stub classes/methods first
- - For modifications to existing code. Find the test and modify it first to fail and then pass after your changes are impemented or create a new test which fails initially before implementing changes
+- Use test-driven development for changes to code behavior: add or extend a test for the intended behavior, observe it fail for the expected reason, then implement the change.
+- Preserve existing regression coverage. Update an existing expectation only when the intended behavior changes.
+- Add stub classes or methods only when needed to run the failing test.
+- For documentation-only changes, review the content without adding behavior tests.
+- If test infrastructure is unavailable, report the limitation and use appropriate available checks. Do not claim unrun tests passed.
 
 ## Comments
 
-### Explanatory comments
-
-Add these sparingly to help a reader understand the code where it is not self-explanatory or difficult to read or interpret. Use to document obscure choices or logic that would not be clear without an understanding of the reasoning when the code was implemented. 
-
-Don't add comments for the sake of commenting or where the code should be self-documenting. Adding comments to explain code can be a sign or poorly written code. 
-
-### Documentation comments
-
-Some languages provide rich interfaces for documenting classes and functions etc. Follow the conventions and best practices of the language you're developing in when writing these type of comments. In C# for example, every public class and member should be documented.
+- Add explanatory comments sparingly to document non-obvious reasoning, constraints, or choices.
+- Prefer clearer code over comments that merely explain what the code does.
+- Follow the language's documentation conventions. In C#, document every public class and member.
 
 ## Workflow
 
- - Write failing tests
- - Implement the feature or change
- - Validate
-  - Run tests
-  - Run linting
-  - Fix build warnings introduced by your code changes
- - Refactor
-  - Look for and make improvements to your code. Consider improvements carefully and refactor if needed. Don't refactor for the sake of refactoring.
-   - Can you make it easier to read by a human
-   - Could it be better organised?
-   - Could it be more modular or extensible for future changes?
-   - Are the names of classes, interfaces, methods, variables etc appropriate?
+1. Follow the testing approach above, then implement the feature or change.
+2. Run relevant tests, linting, and builds. Fix warnings introduced by your changes.
+3. Review code touched by the task for readability, organisation, naming, and appropriate modularity. Refactor only where it provides a concrete benefit within scope.
+4. After refactoring, rerun relevant tests, linting, and builds.
