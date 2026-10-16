@@ -1,0 +1,9 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "description": "Personal coding preferences for implementing, refactoring, and reviewing code.",
+  "author": {
+    "name": "MrSirSasquatch"
+  },
+  "license": "MIT"
+}

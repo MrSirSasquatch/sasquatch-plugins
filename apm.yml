@@ -1,0 +1,27 @@
+name: sasquatch-plugins
+version: 1.0.0
+description: Agent plugins curated by The Sasquatch
+author: MrSirSasquatch
+# Which agent platforms to deploy to.
+# Resolution order: --target flag > this field > auto-detect from filesystem.
+# Accepted values: agent-skills, antigravity, claude, codex, copilot, cursor, gemini, grok-build, hermes, kiro, opencode, vscode, windsurf
+targets:
+- claude
+- codex
+- copilot
+dependencies:
+  apm: []
+  mcp: []
+includes: auto
+devDependencies:
+  apm: []
+scripts: {}
+marketplace:
+  owner:
+    name: MrSirSasquatch
+  outputs:
+    claude: {}
+  packages:
+    - name: code
+      source: ./plugins/code
+      version: 1.0.0

@@ -1,0 +1,9 @@
+{
+  "name": "sasquatch-plugins",
+  "version": "1.0.0",
+  "description": "Agent plugins curated by The Sasquatch",
+  "author": {
+    "name": "MrSirSasquatch"
+  },
+  "license": "MIT"
+}

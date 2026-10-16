@@ -1,0 +1,15 @@
+name: code
+version: 1.0.0
+description: Personal coding preferences for implementing, refactoring, and reviewing code.
+author: MrSirSasquatch
+license: MIT
+targets:
+  - claude
+  - codex
+  - copilot
+dependencies:
+  apm: []
+  mcp: []
+includes:
+  - .apm/skills/code
+scripts: {}
