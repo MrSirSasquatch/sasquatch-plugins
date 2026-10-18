@@ -31,6 +31,8 @@ Names must reveal intent, distinguish concepts, and agree with behavior.
 
 Prefer names that communicate domain meaning and relevant units. Do not require long names when a short, conventional name is unambiguous in its scope.
 
+Providing meaningful names applies to all aspects of the project including variables, classes, namespaces, directories, projects, solutions etc.
+
 ## Functions
 
 A function should perform one coherent operation at a consistent level of abstraction. Its inputs, outputs, and side effects must be understandable from its contract.

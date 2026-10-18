@@ -23,7 +23,29 @@ Start by writing tests using the Red/Green/Refactor cycle. This means you should
 
 Review the changes that have been made. Ensure that they align with the initial plan, follow best practices, and maintain code quality. 
 
-Perform an automated review using subagents in a fresh context to ensure that the changes adhere to the established coding standards and best practices.
+Ask two independent subagents to review the changes and provide structured feedback. The agents should not communicate with each other and should provide their assessments based solely on the changes made and the established coding standards. The agents should use competing models from two separate providers. Anthropic's Haiku and OpenAI Luna should be used for this purpose. Where two different model providers are not available. Use the same model for both subagents.
+
+Prompt for the subagent review
+```text
+Review the uncomitted changes and provide structured feedback according to the guidelines and practices described in the /devcraft skill. 
+
+The scope of your review applies to both the code changes and their impact on the overall codebase. Consider how the changes fit within the broader architecture of the codebase. Don't limit your review to just code within files. Also consider file naming, directory naming and structure as well as project artifacts and organisation as well.
+
+You are to review the changes on their own and MUST NOT build, run or execute the code. You MUST NOT run tests or rely on any external tools to validate the changes. Your review should be based solely on the code and the established coding standards.
+
+Return your findings in the following structured format
+
+File: <path/to/changed/file:lineNumber>
+Issue: <description of the issue>
+Decision: Reject
+Criticality: <level of criticality, e.g., High, Medium, Low>
+Problem: <description of the problem>
+Consequence: <description of the potential impact or outcome if the issue is not addressed>
+
+More than one of the above templates can be provided where more than one issue exists.
+```
+
+
 
 ## Standing Orders
 
