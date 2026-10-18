@@ -1,6 +1,6 @@
 ---
 name: devcraft
-description: Software craftsmanship and development best practices. Use on all development tasks to ensure high-quality, maintainable, and readable code.
+description: Software craftsmanship and development best practices. Use on all development tasks and code reviews to ensure high-quality, maintainable, and readable code.
 ---
 
 
@@ -29,15 +29,14 @@ Perform an automated review using subagents in a fresh context to ensure that th
 
 These are the standing orders that should be followed for all development tasks:
 
+ - You MUST prioritise your changes for human readability and consider the next developer who will read and maintain the code.
  - You MUST use the Red/Green/Refactor cycle for all code changes.
  - You SHOULD implement code using the tell, don't ask principle, meaning you should tell objects what to do rather than asking them for data and making decisions outside of them.
  - You SHOULD use the gang of four design patterns where applicable to promote code reuse and maintainability. GoF patterns MUST be used to solve demonstrated design and architectural problems, not to decorate code unnecessarily.
  - You MUST plan, consider and review all must-have best-practices noted in the Craftsmanship Reference section below on every development task and code review.
 
 
-
 ## Craftsmanship Reference
-
 
 ### Must-have best-practices
 Refer to these best-practices on every development task and code review.
