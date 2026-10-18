@@ -1,0 +1,14 @@
+{
+  "name": "sasquatch-plugins",
+  "owner": {
+    "name": "MrSirSasquatch"
+  },
+  "plugins": [
+    {
+      "name": "code",
+      "description": "Personal coding preferences for implementing, refactoring, and reviewing code.",
+      "version": "1.0.0",
+      "source": "./plugins/code"
+    }
+  ]
+}
