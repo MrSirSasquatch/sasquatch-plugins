@@ -1,0 +1,9 @@
+{
+  "name": "devcraft",
+  "version": "1.0.0",
+  "description": "A development-focused skill plugin.",
+  "author": {
+    "name": "MrSirSasquatch"
+  },
+  "license": "MIT"
+}

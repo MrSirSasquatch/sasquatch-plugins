@@ -25,3 +25,6 @@ marketplace:
     - name: code
       source: ./plugins/code
       version: 1.0.0
+    - name: devcraft
+      source: ./plugins/devcraft
+      version: 1.0.0
