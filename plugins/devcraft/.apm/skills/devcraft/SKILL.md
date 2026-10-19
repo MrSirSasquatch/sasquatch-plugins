@@ -23,7 +23,7 @@ Start by writing tests using the Red/Green/Refactor cycle. This means you should
 
 Review the changes that have been made. Ensure that they align with the initial plan, follow best practices, and maintain code quality. 
 
-Ask two independent subagents to review the changes and provide structured feedback. The agents should not communicate with each other and should provide their assessments based solely on the changes made and the established coding standards. The agents should use competing models from two separate providers. Anthropic's Haiku and OpenAI Luna should be used for this purpose. Where two different model providers are not available. Use the same model for both subagents.
+Ask two independent subagents to review the changes and provide structured feedback. The agents should not communicate with each other and should provide their assessments based solely on the changes made and the established coding standards. The agents should use competing models from two separate providers. Anthropic's Sonnet 5.5 and OpenAI GPT-6.1 Sol should be used for this purpose. Where two different model providers are not available. Use the same model for both subagents.
 
 Prompt for the subagent review
 ```text
