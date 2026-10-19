@@ -1,6 +1,6 @@
 ---
 name: devcraft
-description: Software craftsmanship and development best practices. Use on all development tasks and code reviews to ensure high-quality, maintainable, and readable code.
+description: Software craftsmanship and development best practices. Use on all coding tasks and code reviews to ensure high-quality, maintainable, and readable code. Do not use for non-coding tasks or changes to configuration, documentation, or other non-code related activities.
 ---
 
 
