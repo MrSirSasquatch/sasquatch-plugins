@@ -1,100 +1,123 @@
-# Code Smell Review Standards
+# Code Smell Prevention Practices
 
-Use this reference as guidance for both preventing code smells in your generated code as well as reviewing code where these smells should be avoided. 
+Apply these practices when writing, changing, and reviewing code to prevent long functions, god classes, unclear parameter lists, data clumps, and primitive obsession. Apply them to new and changed code, including existing code whose behavior the change affects.
 
-## Review Decisions
+## Applying the Practices
 
-- **Reject** when a smell contributes to a concrete correctness, reliability, or maintenance problem. Explain the consequence and require the smallest useful correction.
-- **Flag** when the structure makes change or correct use meaningfully harder, but impact or remedy depends on context. Explain the concern and request clarification or a focused improvement.
-- **Accept** when the structure is clear and cohesive in context, even if it resembles a named smell.
+Write code that follows these practices. When reviewing code, flag anything that does not adhere to them. For each finding, identify the location, the practice not followed, the consequence, and the smallest useful correction. Make findings specific and verifiable. Avoid speculation and duplicate findings for the same underlying issue.
 
-Treat size, repetition, and primitive types as investigation signals, not automatic violations. A review finding should identify the location, explain the risk, and suggest a proportionate improvement. Do not demand refactoring unrelated to the change, introduce abstractions for hypothetical reuse, or prescribe arbitrary line, field, or argument-count thresholds.
+Apply the practices strictly, but in context, including the qualifications below. Established language idioms and repository conventions can meet their intent without matching an example literally. If a necessary tradeoff departs from a practice, explain the reason and remaining risk rather than silently treating it as compliant.
+
+Treat size, repetition, and primitive types as investigation signals, not automatic violations. A structure that resembles a named smell can still be clear and cohesive. Do not require unrelated refactoring, introduce abstractions for hypothetical reuse, or prescribe arbitrary line, field, or argument-count thresholds.
 
 ## Long Functions
 
-A function should express one coherent operation at a consistent level of abstraction. Review whether its length hides meaningful decisions, distinct responsibilities, or important paths.
+A function should express one coherent operation at a consistent level of abstraction. Keep meaningful decisions, responsibilities, and important paths visible.
 
-**Reject when:**
+**DO:**
 
-- The function's unrelated operations are coupled so a caller cannot use or change one safely without affecting another.
-- Complex control flow or mixed responsibilities cause an observable defect, conceal an important failure path, or make a required behavior impractical to verify.
-- Duplicated decision logic in the function can produce inconsistent results on paths affected by the change.
+- Extract cohesive operations with meaningful names when distinct steps or mixed abstraction levels obscure the main flow.
+- Separate unrelated responsibilities so callers can use or change one without unintentionally affecting another.
+- Simplify nested branches and tangled control flow so normal and failure paths are understandable and verifiable.
+- Consolidate shared decision logic so affected paths apply the same rules consistently.
+- Make inputs, outputs, and side effects understandable as one contract. Separate orchestration from detailed work when it clarifies responsibility or enables focused testing.
 
-**Flag when:**
+**DO NOT:**
 
-- Several independently meaningful steps, nested branches, or multiple abstraction levels make the main flow difficult to follow.
-- A cohesive section lacks a useful name, or the function's inputs, outputs, and side effects are difficult to understand as one contract.
-- The function combines orchestration with detailed work that could be isolated to clarify responsibility or enable focused testing.
+- Hide important failure paths or independently meaningful responsibilities inside a long sequence of implementation details.
+- Split a straightforward sequence into tiny helpers merely to reduce line count. Keep closely related steps together when extraction would obscure behavior.
 
-Prefer extracting cohesive operations with meaningful names, simplifying control flow, or separating responsibilities. Do not split a straightforward sequence into tiny helpers merely to reduce line count; keep closely related steps together when extraction would obscure the behavior.
+| DO NOT | DO |
+|---|---|
+| Bury invoice validation, total calculation, and persistence details in one deeply nested function. | Keep the main flow readable through cohesive operations such as `validateInvoice`, `calculateInvoiceTotal`, and `saveInvoice`. |
+| Extract each assignment into a helper to meet a line-count limit. | Keep a clear, cohesive sequence together regardless of its line count. |
 
 ## Large Classes (God Classes)
 
-A class should have a cohesive responsibility, protect the invariants it owns, and expose an interface suited to its callers. Judge its responsibilities and coupling, not its raw size.
+A class should have a cohesive responsibility, protect the invariants it owns, and expose an interface suited to its callers. Organize it around responsibilities and coupling, not raw size.
 
-**Reject when:**
+**DO:**
 
-- Unrelated responsibilities are entangled so that changing one can break another or callers must understand internal representation to use the class safely.
-- One class coordinates or owns state in a way that creates a concrete correctness defect, hidden coupling, or a change that cannot be isolated safely.
-- A responsibility split is necessary to correct a demonstrated invariant, lifecycle, or ownership problem.
+- Keep related behavior and state together with clear ownership, lifecycle, and invariant protection.
+- Separate unrelated responsibilities when changing one could break another or their state and dependencies can be isolated meaningfully.
+- Use groups of methods that operate on separate fields or change for distinct reasons as signals to examine responsibility boundaries.
+- Keep dependencies and public operations aligned with the class's purpose.
+- Put rules with a cohesive collaborator that owns them instead of making callers navigate internals or duplicate those rules.
 
-**Flag when:**
+**DO NOT:**
 
-- Groups of methods operate on largely separate subsets of fields or change for distinct reasons.
-- The class accumulates broad dependencies, branching by unrelated concerns, or many public operations that make its contract difficult to understand.
-- Callers repeatedly navigate its internals or duplicate rules that belong with a cohesive collaborator.
+- Accumulate unrelated concerns and dependencies in one class or leave state ownership ambiguous.
+- Require callers to understand internal representation to use the class safely.
+- Split a cohesive class solely to reduce its field or method count, or create a service for every operation.
 
-Consider extracting a responsibility or collaborator when it establishes a useful boundary and can own related behavior and state. Do not split a cohesive class just to reduce its field or method count, or create a service for every operation.
+| DO NOT | DO |
+|---|---|
+| Make one class own invoice rules, SMTP connections, and PDF layout details. | Keep invoice rules cohesive and delegate email transport and document rendering to collaborators with clear responsibilities. |
+| Move fields into a helper while leaving all their rules in the original class. | Move related state and behavior together so the new boundary has meaningful ownership. |
 
 ## Long Parameter Lists
 
-Parameters should make an operation's required inputs clear and safe to provide. Review whether the call site communicates intent and whether the inputs represent a cohesive concept.
+Make an operation's required inputs clear and safe to provide. Communicate intent at the call site and represent cohesive concepts explicitly where useful.
 
-**Reject when:**
+**DO:**
 
-- The signature permits invalid combinations that the implementation mishandles.
-- Similar or interchangeable positional parameters create a demonstrated risk of passing values in the wrong order or unit.
-- Required information is hidden in ambient state or optional defaults, causing incorrect behavior for callers affected by the change.
+- Use named arguments or distinct domain types when similar positional values are easy to confuse by order, meaning, or unit.
+- Prevent invalid argument combinations or handle them explicitly.
+- Represent related inputs with a cohesive domain object or options type when it clarifies their shared meaning.
+- Use separate operations when boolean or nullable mode parameters select substantially different contracts.
+- Keep independent, genuinely required inputs explicit rather than hiding them in ambient state or inappropriate optional defaults.
 
-**Flag when:**
+**DO NOT:**
 
-- Calls require readers to remember the meaning or order of many arguments, especially repeated values of the same type.
-- Several parameters always travel together or describe one domain concept, suggesting a cohesive value object or options type.
-- A boolean or nullable parameter selects substantially different behavior, obscuring the operation's contract.
+- Require readers to remember the meaning or order of ambiguous arguments.
+- Bundle unrelated values into a parameter bag merely to shorten the signature.
+- Replace clear, explicit parameters solely to meet an argument-count limit.
 
-Prefer named arguments, a domain type, or separate operations when they make valid usage clearer. Keep independent, genuinely required inputs explicit; do not bundle unrelated values into a parameter bag just to shorten the signature.
+| DO NOT | DO |
+|---|---|
+| `transferFunds(firstAccountId, secondAccountId, amount)` when the direction is unclear. | `transferFunds(sourceAccountId: firstAccountId, destinationAccountId: secondAccountId, amount: amount)`. |
+| Combine unrelated dependencies and request values in a generic `OperationParameters` object. | Keep independent inputs explicit; group only values that form a meaningful concept. |
 
 ## Data Clumps
 
-Repeated groups of values may represent one concept with shared meaning, validation, or behavior. Confirm that the values belong together before recommending a new type.
+Repeated groups of values may represent one concept with shared meaning, validation, or behavior. Establish that relationship before introducing a new type.
 
-**Reject when:**
+**DO:**
 
-- A duplicated group represents one domain rule or invariant, but independent handling lets affected paths accept inconsistent or invalid values.
-- The group is repeatedly passed or stored in a way that causes a concrete misuse, synchronization defect, or inconsistent change.
+- Identify related values that repeatedly travel together through signatures, return values, or fields and require callers to keep them aligned.
+- Introduce a cohesive value object when it names a real domain concept or protects a shared invariant.
+- Centralize shared validation and behavior so affected paths cannot apply inconsistent rules.
+- Keep values with a shared lifecycle consistent when passing, storing, or updating them.
 
-**Flag when:**
+**DO NOT:**
 
-- The same related values repeatedly appear together in function signatures, return values, or fields, and callers must keep them aligned.
-- The values share validation, lifecycle, units, or behavior that is duplicated across the changed paths.
-- A cohesive type would name the concept and make its valid state easier to represent.
+- Make callers repeatedly reconstruct a domain concept from separately handled values and duplicated rules.
+- Create a type solely because values appear together once, or combine values whose relationship is incidental.
 
-Prefer introducing a value object when it captures real domain meaning or protects a shared invariant. Do not create a type solely because values appear together once, or combine values whose relationship is incidental.
+| DO NOT | DO |
+|---|---|
+| Pass `startDate` and `endDate` separately through many operations, each implementing its own date-order validation. | Use a `DateRange` value object that enforces the shared ordering rule. |
+| Group `customerId` and `retryCount` because they appear in the same call. | Keep them independent when they have no shared meaning, lifecycle, or invariant. |
 
 ## Primitive Obsession
 
-Primitive values are appropriate for simple data and boundaries. Consider a domain type when a primitive conceals meaningful constraints, units, identity, or behavior that callers must repeatedly reconstruct.
+Primitive values are appropriate for simple data and boundaries. Use a domain type when a primitive conceals meaningful constraints, units, identity, or behavior that callers must repeatedly reconstruct.
 
-**Reject when:**
+**DO:**
 
-- A primitive permits invalid states that lead to a concrete defect, such as confusing distinct identifiers, mixing units, or accepting malformed domain values.
-- Callers duplicate validation or conversion rules inconsistently for the same concept on paths affected by the change.
-- The representation fails to protect an invariant the code relies on.
+- Represent meaningful invariants or operations with a small domain type when it improves safety or clarity.
+- Distinguish identifiers and units when using interchangeable primitives would permit incorrect use.
+- Validate at the appropriate boundary and preserve the valid state the code relies on.
+- Centralize repeated parsing, formatting, validation, and conversion for the same concept.
+- Make domain meaning explicit when values cross boundaries.
 
-**Flag when:**
+**DO NOT:**
 
-- A primitive repeatedly crosses boundaries with domain meaning that is unclear from its name or use.
-- Callers perform repeated parsing, formatting, validation, or unit conversion for the same concept.
-- Several related values and operations would be clearer and safer when represented by a cohesive domain type.
+- Rely on callers to reconstruct hidden constraints or apply duplicated validation and conversion rules consistently.
+- Allow a representation to admit invalid states that the code assumes cannot occur.
+- Wrap every string, number, or boolean. Keep primitives when their meaning is obvious, constraints are trivial, and a type would add indirection without improving safety or clarity.
 
-Prefer a small type that expresses a meaningful invariant or operation, and validate at the appropriate boundary. Do not wrap every string, number, or boolean; keep primitives when their meaning is obvious, constraints are trivial, and a type would add indirection without improving safety or clarity.
+| DO NOT | DO |
+|---|---|
+| Pass a timeout as an unqualified integer while callers repeatedly convert between seconds and milliseconds. | Use a duration type such as `TimeSpan`, converting to the required unit at the external boundary. |
+| Wrap a simple display label in a domain type solely because it is a string. | Keep the string when a meaningful name already communicates its purpose and no additional invariant needs protection. |

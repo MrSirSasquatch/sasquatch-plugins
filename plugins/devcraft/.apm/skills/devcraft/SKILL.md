@@ -36,10 +36,8 @@ You are to review the changes on their own and MUST NOT build, run or execute th
 Return your findings in the following structured format
 
 File: <path/to/changed/file:lineNumber>
-Issue: <description of the issue>
-Decision: Reject
 Criticality: <level of criticality, e.g., High, Medium, Low>
-Problem: <description of the problem>
+Issue: <description of the issue>
 Consequence: <description of the potential impact or outcome if the issue is not addressed>
 
 More than one of the above templates can be provided where more than one issue exists.
