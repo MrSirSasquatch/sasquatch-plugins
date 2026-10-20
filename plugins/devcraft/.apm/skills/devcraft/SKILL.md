@@ -1,69 +1,93 @@
 ---
 name: devcraft
-description: Software craftsmanship and development best practices. Use on all coding tasks and code reviews to ensure high-quality, maintainable, and readable code. Do not use for non-coding tasks or changes to configuration, documentation, or other non-code related activities.
+description: Apply personal coding preferences when writing, refactoring, or reviewing code.
 ---
 
+## Planning
 
-## Workflow
+This is a guide for your own internal planning and implementation of code changes. It is not intended to be a plan shared with the user but rather a set of guidelines to help you plan and implement code changes in a way that is maintainable, readable, and adheres to best practices.
 
-The following workflow SHOULD be followed for all development tasks unless explicitly instructed otherwise by the user.
+ - Gain context of the codebase before you implement changes.
+ - Consider the impact of the changes on the wider codebase. Ensure they are cohesive and consistent. 
+ - Abstract your view of the implementation plan to a higher level than just the narrow task put forward to you. Consider how future changes to the codebase will build upon your completed solution. 
+ - Use object-oriented paradigms to inform your implementation plan. Think about how the models, services, interfaces you're planning to add or change fit into best practices for domain driven design and OOP. Without over compensating, make effective use of encapsulation, polymorphism, and inheritance. 
+ - Simplify complex implementations using common design patterns. Think about how an industry expert following best practice would implement a solution and use that as a guide to inform your implementation plan. 
 
-### 1. Plan
+## Language Guidelines
+Refer to the following language specific guidlines for additional coding standards and best practices for each language. Read only the guidelines that apply to the task.
 
- - Understand the ask from the user in the context of the codebase you'll be working withand the requirements for achieving it. At a high level, formulate a plan or opinion on how to approach the task.
- - Do you see any challenges in being able to implement the task according to these guidelines? Confirm with the user before proceeding. Provide options or alternative approaches if necessary.
- - Where the changes modify important aspects of the codebase such as adding new domain models, implementing a major architectural changes to how components interact, create a written implementation plan and get it reviewed by the user before proceeding. For minor changes, you may proceed with an in-memory plan without confirming with the user. 
+ - [C# Coding Guidelines](./references/lang-csharp.md)
 
+## Writing Code
 
-### 2. Red/Green/Refactor
+ - Keep changes simple and minimal.
+ - Write code only for what the task requires. Resist the urge to add fluff and padding.
+ - Strive for crisp, elegant minimalism in your implementations. Complex code made simple and written in fewer lines is always better. 
+ - Writing simple and minimal code is not mutually exclusive with correctness or completeness. You must still meet all requirements of the task and ensure the solution works.
 
-Start by writing tests using the Red/Green/Refactor cycle. This means you should first write a failing test (Red), then implement the minimum code necessary to make the test pass (Green), and finally refactor the code while keeping the tests passing (Refactor).
+## Clean Code
 
-### 3. Review
+### Naming things
 
-Review the changes that have been made. Ensure that they align with the initial plan, follow best practices, and maintain code quality. 
+ - Use meaningful names for all levels of the codebase including variables, methods, classes, namespaces, directories and project artifacts like project or solution files. 
+ - Don't name variables after the domain concept they represent, name them specific to their instance
+  - `var customerService = ` over `var service = `
+  - `var twitterApiClient = ` over `var client = `
+ - Always prefer full and verbose names over abbreviations or acronyms with the exception of established patters such as for loop variables
+  - `var customer = ` over `var c = `
 
-Ask two independent subagents to review the changes and provide structured feedback. The agents should not communicate with each other and should provide their assessments based solely on the changes made and the established coding standards. The agents should use competing models from two separate providers. Anthropic's Sonnet 5.5 and OpenAI GPT-6.1 Sol should be used for this purpose. Where two different model providers are not available. Use the same model for both subagents.
+### Functions
+ 
+ - A function should perform one coherent operation at a consistent level of abstraction.
+ - Separate unrelated actions so callers can invoke one withint invoking the other.
+ - Avoid long functions. Functions longer than 30 lines are at risk of being too complex and unmanagable. Long functions usually occur from incremental changes. Consider refactoring if a function has grown too large, even after adding just 1 additional line.
+ - Avoid long parameter lists. Represent related inputs with a cohesive domain object or options type.
+ - Do not bundle unrelated values into a parameter bag merely to shorten the signature.
+ - Shorten functions by creating smaller functions with meaningful and intention revealing names.
 
-Prompt for the subagent review
-```text
-Review the uncomitted changes and provide structured feedback according to the guidelines and practices described in the /devcraft skill. 
+### Classes
 
-The scope of your review applies to both the code changes and their impact on the overall codebase. Consider how the changes fit within the broader architecture of the codebase. Don't limit your review to just code within files. Also consider file naming, directory naming and structure as well as project artifacts and organisation as well.
+ - Give classes a single cohesive responsibility.
+ - Protect a classes invariants using encapsulation
+ - Expose a small public interface suited to callers of the class
+ - Put domain rules with the class that owns them rather than making callers navigate object graphs and reconstruct those rules.
 
-You are to review the changes on their own and MUST NOT build, run or execute the code. You MUST NOT run tests or rely on any external tools to validate the changes. Your review should be based solely on the code and the established coding standards.
+### Comments
 
-Return your findings in the following structured format
+These rules/guidelines apply to general code comments and not to C# XML comments or similar.
 
-File: <path/to/changed/file:lineNumber>
-Criticality: <level of criticality, e.g., High, Medium, Low>
-Issue: <description of the issue>
-Consequence: <description of the potential impact or outcome if the issue is not addressed>
+ - Use comments to preserve reasoning, constraints, and contracts that the code alone cannot communicate clearly.
+ - Clean code should be self documenting. Comments explaining what the code does are almost never needed. Comments explaining why the code does what it does when this isn't clear from the code itself are acceptable.
+ - Explain non-obvious ownership, side effects, units, ordering constraints, algorithms, and protocol requirements where callers or maintainers need them.
+ - Keep comments and API documentation consistent with behavior. Update adjacent comments when behavior changes.
+ - Do not use comments to excuse a known correctness defect instead of fixing it or explicitly defining the unsupported behavior.
 
-More than one of the above templates can be provided where more than one issue exists.
-```
+### Exceptions
 
+ - Handle failures at a boundary that can recover. Let failures propagate when a higher boundary owns that responsibility. 
+ - Do not catch and handle exceptions simply to log the message. Again, leave this responsibility to a higher boundary
+ - Do not swallow a failure, log and ignore it, or replace an unsuccessful operation with a success-like default.
 
+## Code Smells
 
-## Standing Orders
+Avoid these coding anti-patterns and consider small targeted refactors for code you touch during task implementation.
 
-These are the standing orders that should be followed for all development tasks:
+During code review, these code smells should be flagged where they've been introduced or compounded with the changes made.
 
- - You MUST prioritise your changes for human readability and consider the next developer who will read and maintain the code.
- - You MUST use the Red/Green/Refactor cycle for all code changes.
- - You SHOULD implement code using the tell, don't ask principle, meaning you should tell objects what to do rather than asking them for data and making decisions outside of them.
- - You SHOULD use the gang of four design patterns where applicable to promote code reuse and maintainability. GoF patterns MUST be used to solve demonstrated design and architectural problems, not to decorate code unnecessarily.
- - You MUST plan, consider and review all must-have best-practices noted in the Craftsmanship Reference section below on every development task and code review.
+### Long Parameter Lists
 
+Similar to primitive obsession, make sure a methods parameters are clear and safe to provide.
 
-## Craftsmanship Reference
+Long parameter lists are typically where 7 or more input parameters exist on a function or constructor.
 
-### Must-have best-practices
-Refer to these best-practices on every development task and code review.
+The consequence of long parameter lists is a risk to a domain object which has not been encapsulated yet, confusion about parameter position for callers and a risk for incorrect properties to be provided during refactor operations or maintenance. 
 
-|Reference file|Description|
-|---|---|
-|references/best-practices-clean-code.md|The most important topics and practices for writing clean, maintainable, and readable code.|
-|references/best-practices-code-smells.md|Code smells that should be avoided or resolved.|
+### Data Clumps
 
----
+Repeated groups of values may represent one concept with shared meaning, validation, or behavior. Establish that relationship before introducing a new type.
+
+### Primitive Obsession
+
+Primitive values are appropriate for simple interfaces. Use a domain type when a primitive or group of primitives conceals meaningful constraints, units, identity, or behavior that callers must repeatedly reconstruct.
+
+Do not wrap every string, number, or boolean. Keep primitives when their meaning is obvious, constraints are trivial, and a type would add indirection without improving safety or clarity.
