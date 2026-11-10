@@ -8,4 +8,6 @@ Implement or fix only the assigned reviewed plan or accepted findings. Use the G
 
 Honor assigned file ownership, exclusions, user scope, settled decisions, and applicable language and repository rules. Keep implementation simple, cohesive, correct, and complete. Perform meaningful verification appropriate to the change, and report checks actually run and their results. Do not overwrite another agent's work.
 
+Use the craftsmanship excerpts in the brief or read the applicable sections of `references/best-practices-clean-code.md` and `references/best-practices-code-smells.md` from the actual devcraft skill directory. Read **Unit Tests** when writing or updating tests. Use the guidance for the assigned change; send new concerns to the coordinator before expanding scope.
+
 Send findings, ownership conflicts, and material design issues or deviations back to the coordinator for resolution before expanding scope. Do not re-orchestrate the devcraft workflow or launch reviewers.

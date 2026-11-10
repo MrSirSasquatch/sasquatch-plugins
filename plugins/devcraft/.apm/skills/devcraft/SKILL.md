@@ -27,6 +27,7 @@ For a bare invocation without an actionable request, ask for the task. After app
 - Use cohesive responsibilities, encapsulation, and appropriate domain models. Introduce patterns, interfaces, polymorphism, or inheritance only when they solve a current problem.
 - Refactor touched code where it provides a concrete benefit; do not expand into unrelated cleanup.
 - Read [C# guidelines](references/lang-csharp.md) only for C# work. Send each agent the language rules relevant to its assignment.
+- Use the [clean code](references/best-practices-clean-code.md) and [code smells](references/best-practices-code-smells.md) references for detailed criteria and examples. Each specialist names the sections it needs; include only applicable guidance in a brief.
 
 ## Plan
 
@@ -54,7 +55,7 @@ In standalone Review mode, stop after reporting findings. In a change workflow, 
 
 ## Specialist catalogue
 
-Invoke the selected named agent with its focused brief; its definition supplies the category guidance. Read a definition when assessing its remit or using the dispatch fallback. Give each review agent only its assigned category and relevant language requirements, with permission to inspect supporting code. For named invocation and model controls, read [agent runtime guidance](references/agent-runtime.md) before the first dispatch.
+Invoke the selected named agent with its focused brief; its definition supplies the remit and selects the relevant reference sections. Read a definition when assessing its remit or using the dispatch fallback. Give each review agent only its assigned category and relevant language requirements, with permission to inspect supporting code. For named invocation and model controls, read [agent runtime guidance](references/agent-runtime.md) before the first dispatch.
 
 | Specialist | Owns | Named agent |
 | --- | --- | --- |

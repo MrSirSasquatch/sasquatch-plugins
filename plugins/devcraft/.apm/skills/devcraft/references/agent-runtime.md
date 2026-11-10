@@ -34,7 +34,7 @@ If named invocation prevents selecting the preferred model but fresh-agent launc
 
 Review agents are instructed to be read-only. Apply runtime-enforced read-only tools or sandbox controls when available. Shared definitions omit a `tools` whitelist because APM does not preserve those restrictions in its Codex export; do not treat a role prompt as an enforced permission boundary.
 
-Agent bodies use the contract supplied in the assignment, or locate the required section of `references/agent-briefs.md` in the installed devcraft skill. Resolve from the skill's actual directory rather than the agent file. This avoids relying on relative links inside generated Codex agent instructions, which APM 0.35.0 does not rewrite. Keep schemas in that shared reference rather than copying them into nine definitions.
+Agent bodies use the contract and craftsmanship sections supplied in the assignment or read the applicable sections in the installed devcraft skill. Resolve paths such as `references/agent-briefs.md` from the skill's actual directory rather than the agent file. This avoids relying on relative links inside generated Codex agent instructions, which APM 0.35.0 does not rewrite. Supply excerpts if the worker cannot access the installed skill files. Keep the detailed guidance and schemas in the shared references.
 
 The coordinator catalogue identifies agents by name rather than linking to source filenames: bundle installation changes their locations and extensions. Keep skill references inside the skill bundle so they remain valid after deployment. Verify deployed agents and skill references after changing packaging. See [APM package-relative links](https://microsoft.github.io/apm/producer/package-relative-links/).
 
