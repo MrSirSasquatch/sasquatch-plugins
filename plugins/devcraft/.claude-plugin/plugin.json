@@ -1,7 +1,7 @@
 {
   "name": "devcraft",
   "version": "1.0.0",
-  "description": "A development-focused skill plugin.",
+  "description": "Plan, implement, review, and fix code with coordinated specialist agents.",
   "author": {
     "name": "MrSirSasquatch"
   },
