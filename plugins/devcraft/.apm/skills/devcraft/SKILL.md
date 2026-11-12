@@ -47,7 +47,7 @@ Parallelize independent deliverables with non-overlapping file ownership. Serial
 
 ## Review and Fix
 
-Read the [review process](references/review-process.md) before code review or fixes. Select applicable specialists independently of the plan-review selection. Behaviour checks acceptance criteria for executable changes; choose additional categories according to the changed code.
+Read the [review process](references/review-process.md) before code review or fixes. Every code review requires ALL specialists in the catalogue, regardless of change size or plan-review selection; never omit a category. Narrow only each specialist's scope, not the roster. Behaviour checks acceptance criteria for executable changes.
 
 Freeze a common review target, run specialists in parallel within available capacity, collect every assigned result, and then adjudicate findings. Reviewers do not edit code. Only after collection and assessment may the coordinator dispatch generalist fix agents.
 
@@ -78,7 +78,7 @@ Implementation and fixes use `devcraft-implementer`, a generalist worker under c
 - Shared agent definitions omit a pinned model to avoid sending an incompatible identifier to another target. They set `model_reasoning_effort: high` for the Codex export; other targets require their own effort controls. Apply supported model overrides at dispatch using the runtime guidance; a named role by itself does not establish the intended model.
 - Keep the current session as coordinator by default. Use a planner agent only when it adds value; avoid an extra orchestration layer for its own sake.
 - When explicit model or effort controls exist, set them when launching agents. Use fresh contexts where supported, with the focused brief instead of the full conversation. Never claim a model or effort setting was applied unless the runtime supports and confirms it. Report unavailable preferences and the actual fallback.
-- Choose specialists by relevance, bound review scope, keep reports concise, and reuse or close agents rather than accumulating sessions. No findings is a valid result.
+- Choose plan-review specialists by relevance; code review always uses all specialists. Bound review scope, keep reports concise, and reuse or close agents rather than accumulating sessions. No findings is a valid result.
 - Respect concurrency limits by scheduling review waves. The collection barrier includes queued reviewers, not just the first wave.
 - If delegation is unavailable, disclose the limitation. The coordinator owns implementation and fixes sequentially under the same brief, scope, and verification contracts, and performs read-only sequential category review passes under the same review contracts. Do not describe those passes as independent agents.
 

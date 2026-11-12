@@ -12,7 +12,7 @@ For plan review, freeze a plan revision instead of a code diff. Resolve feedback
 
 ## Select and collect specialists
 
-Choose categories based on evidence in the plan or changes. Keep the individual remits narrow; do not combine unrelated categories into one general review merely to reduce the agent count. Reduce cost by omitting irrelevant categories and bounding scope.
+For plan review, choose categories based on evidence in the plan. For code review, ALL specialists in the catalogue are required; never omit a category, and record any that could not run as a coverage gap. Keep the individual remits narrow; do not combine categories into one general review to reduce the agent count. Reduce cost by bounding scope, not by dropping specialists.
 
 Invoke the catalogue's named specialist for each selected category with its focused brief. Run independent reviews concurrently up to runtime capacity. Schedule remaining categories in later waves against the same frozen target. Review agents are read-only and do not recruit other reviewers or implement repairs.
 
@@ -46,7 +46,7 @@ After collection and adjudication, group accepted findings into cohesive tasks b
 
 ## Verify and stop
 
-Inspect the integrated repairs, run appropriate checks, and send affected code to the relevant specialists for targeted follow-up. Evaluate repairs against the original task baseline and acceptance criteria. Include newly introduced regressions, not just whether the original lines disappeared.
+Inspect the integrated repairs, run appropriate checks, and send affected code to the relevant specialists for targeted follow-up (a full code review, if re-run, again uses all specialists). Evaluate repairs against the original task baseline and acceptance criteria. Include newly introduced regressions, not just whether the original lines disappeared.
 
 Expand review coverage when repairs change boundaries, public contracts, failure behaviour, or previously unreviewed areas. Use the same collection barrier for each follow-up wave before another fix dispatch. Update each accepted finding to verified fixed or still open with supporting evidence.
 

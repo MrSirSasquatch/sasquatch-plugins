@@ -1,9 +1,0 @@
-{
-  "name": "devcraft",
-  "version": "1.0.0",
-  "description": "Plan, implement, review, and fix code with coordinated specialist agents.",
-  "author": {
-    "name": "MrSirSasquatch"
-  },
-  "license": "MIT"
-}

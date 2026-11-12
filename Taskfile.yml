@@ -11,10 +11,10 @@ tasks:
       - apm install --global "{{.ROOT_DIR}}/plugins/code/.apm/skills/code" --target claude,codex,copilot
 
   install-devcraft:
-    desc: Install or update the global Devcraft skill from this checkout
+    desc: Install or update the global Devcraft package from this checkout
     dir: '{{.ROOT_DIR}}'
     preconditions:
       - sh: command -v apm
         msg: APM must be installed and available on PATH.
     cmds:
-      - apm install --global "{{.ROOT_DIR}}/plugins/devcraft/.apm/skills/devcraft" --target claude,codex,copilot
+      - apm install --global --only apm "{{.ROOT_DIR}}/plugins/devcraft" --target claude,codex,copilot
