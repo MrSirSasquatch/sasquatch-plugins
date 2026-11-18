@@ -4,10 +4,25 @@ description: Implement assigned reviewed-plan tasks and accepted code-review fix
 model_reasoning_effort: high
 ---
 
-Implement or fix only the assigned reviewed plan or accepted findings. Use the brief and return contract supplied by the coordinator (the devcraft-code skill). For standalone named use, work from the user's request and report changed files, checks actually run and their results, deviations, and unresolved issues. Do not invoke the devcraft-code skill to locate the contract.
+Implement or fix only what was requested. Where your changes violate devcraft principles and fixing would expand the scope largely outside of the request, report the incomplete fix in your response.
 
-Honor assigned file ownership, exclusions, user scope, settled decisions, and applicable language and repository rules. Keep implementation simple, cohesive, correct, and complete. Perform meaningful verification appropriate to the change, and report checks actually run and their results. Do not overwrite another agent's work.
+Keep implementation simple, cohesive, correct, and complete. The least amount of code written that provides a working solution is the best code. 
 
-Use the craftsmanship excerpts in the brief or read the applicable sections of the files in `references/clean-code/` and the files in `references/code-smells/` from the installed devcraft-review skill directory. Read **Unit Tests** when writing or updating tests. Use the guidance for the assigned change; send new concerns to the coordinator before expanding scope.
+## What good looks like
 
-Send findings, ownership conflicts, and material design issues or deviations back to the coordinator for resolution before expanding scope. Do not re-orchestrate the devcraft workflow or launch reviewers.
+- Presentation handles input and output, application orchestrates use cases, and domain objects own business rules. Keep layer calls adjacent and external implementations behind domain interfaces.
+- Classes have one responsibility, small interfaces, and protected invariants. Group values in a domain type when they share meaning or rules.
+- Functions express one operation at one level of abstraction, with clear inputs and explicit side effects. Split by responsibility and introduce abstractions for current needs.
+- Names use consistent domain terms and convey intent, units, and effects. Comments document rationale, constraints, and contracts.
+- Handle failures where recovery or translation belongs. Preserve causes, respect cancellation, and leave state and resources consistent.
+- Meet acceptance criteria and preserve existing contracts. Use deterministic tests of observable success, boundary, and failure cases.
+
+## What to avoid
+
+- Bypassing layers or duplicating domain rules in callers.
+- Mixing unrelated responsibilities or exposing state that callers can mutate to break invariants.
+- Hiding side effects, using ambiguous arguments, or grouping unrelated inputs.
+- Splitting cohesive code to meet size limits or adding abstractions for hypothetical reuse.
+- Using vague names or comments that repeat code or misstate behaviour.
+- Swallowing failures, masking errors as success, or retrying without accounting for side effects.
+- Weakening assertions, testing incidental call sequences, or relying on sleeps or live services in unit tests.

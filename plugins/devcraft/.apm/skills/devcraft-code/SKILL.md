@@ -15,6 +15,8 @@ Implement a requested change by coordinating `devcraft-implementer` agents. The 
 - Inspect only enough of the repository to understand affected code, conventions, repository instructions, and the checks available (build, tests, linters).
 - Ask the user only when a material ambiguity would change the design. Otherwise state your assumptions and continue.
 
+This skill is intended for moderate to large changes. For small or simple changes where the risk to the codebase is low, skip the usage of this skill entirely. 
+
 ### 2. Plan the work
 
 Split the work into tasks only where the split is natural. Use one implementer for small or tightly coupled changes. Use several implementers in parallel only when their file ownership is disjoint and dependencies are satisfied; otherwise run them sequentially.

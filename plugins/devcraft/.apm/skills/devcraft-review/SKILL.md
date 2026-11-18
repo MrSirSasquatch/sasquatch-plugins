@@ -21,11 +21,13 @@ Where the user specifies the scope explicitly, use that scope. Record the baseli
 
 ### 2. Dispatch to specialists
 
-Dispatch at least one of each specialist below. Read [agent runtime guidance](references/agent-runtime.md) before dispatching, and use the [specialist brief and result contract](references/agent-briefs.md). Supply the scope, applicable repository rules, accessible craftsmanship references, and any relevant PR context. The agent definition supplies specialty guidance; the brief supplies the concrete assignment.
+Unless instructed otherwise by the user, dispatch at least one of the following specialists as a subagent. Provide the agent with a prompt asking for a review of the scope of change they should look at and nothing else. It is important not to give the subagent any other context, as it may bias the review. 
+
+For large changes, and with the exception of the codebase design specialist, reviews may be broken into multiple subagents for the same specialist type, each with a different subset of the changed files. The coordinator should ensure that all changed files are covered by at least one subagent.
 
 | Specialist | Owns | Named agent |
 | --- | --- | --- |
-| Architecture | System boundaries, dependency direction, placement, wider consistency | `devcraft-architecture` |
+| Codebase Design | Code architecture, application layering, code cohesion, single responsibility | `devcraft-codebase-design` |
 | Behaviour | Acceptance criteria, regressions, edge cases, verification quality | `devcraft-behaviour` |
 | Classes | Cohesive responsibilities, encapsulation, invariants, public interfaces, data clumps, primitive obsession | `devcraft-classes` |
 | Comments | Reasoning, contracts, accurate comments, required API documentation | `devcraft-comments` |
@@ -43,7 +45,7 @@ As the review coordinator you may remove deplicates or consolidate overlapping f
 
 Output a report in the following tabular format. Order items but criticality and then by category.
 
-| Criticality | Category | Finding | Smallest possible fix |
+| Criticality | Category | Finding | Recommended Fix |
 | --- | --- | --- | --- |
 
 ## Delegation and cost
