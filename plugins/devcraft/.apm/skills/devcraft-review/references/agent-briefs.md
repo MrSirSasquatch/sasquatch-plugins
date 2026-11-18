@@ -8,7 +8,7 @@ The coordinator fills these briefs with concrete context before dispatching the 
 - **Stage and mode:** Plan review, code review, or targeted follow-up. State that the assignment is read-only.
 - **Request:** Original requested outcome and relevant acceptance criteria.
 - **Target:** Plan version and section references, or the exact code baseline and frozen target including uncommitted and untracked content when applicable.
-- **Scope:** Decisions, files, symbols, or diff to assess, and relevant supporting context. For code review, include the settled design contracts needed to judge behaviour without the implementer's persuasive explanation.
+- **Scope:** Decisions, files, symbols, or diff to assess, and relevant supporting context. Specify assigned files or subsets and any exclusions with reasons. For code review, include the settled design contracts needed to judge behaviour without the implementer's persuasive explanation.
 - **Rules:** Relevant language requirements and repository constraints. Supply the relevant craftsmanship sections selected by the specialist's definition as accessible paths from the installed skill or as excerpts when the worker cannot read those paths. Apply the examples within the assigned remit and target.
 - **Question:** Give the specialist a concrete question within its remit, tailored to the review stage and available evidence. Put task-specific exclusions in the brief.
 - **Output:** Supply the Specialist result contract below as an excerpt or an accessible path resolved from the installed devcraft skill. Include coverage and any limitations. No quota and no edits. Flag out-of-category observations for coordinator routing.
@@ -23,8 +23,8 @@ Give reviewers requirements and evidence, not another reviewer's conclusions, th
 
 ### Specialist result
 
-- **Coverage:** Category, target reviewed, and files or plan sections inspected.
-- **Findings:** For each, supply a local ID, category, priority, precise location, relevant principle or acceptance criterion, evidence, concrete consequence, and suggested direction. Identify uncertainty or the check needed to resolve it.
+- **Coverage:** Category, target reviewed, and actual files or plan sections inspected. Distinguish inspected areas with no findings from omitted areas; name omissions and their reasons. For naming code reviews, state whether the pass included changed locals, parameters, lambdas, and embedded code as well as public identifiers.
+- **Findings:** For each, supply a local ID, category, priority, precise location, relevant principle or acceptance criterion, evidence, concrete consequence, and suggested direction. Identify uncertainty or the check needed to resolve it. A consequence may be ambiguity at the point of use or lost domain meaning; a runtime defect is not required for a clarity finding. Equally clear alternatives do not warrant findings.
 - **Priority:** High for serious correctness, compatibility, or structural risk; medium for a concrete maintainability or behavioural problem; low for a local clarity or documentation improvement. Explain the impact rather than assigning severity from a rule's name or a line-count threshold.
 - **Location:** File and line or symbol for code, or section/task identifier for a plan. Reference the frozen target, not a later edit.
 - **Other observations:** Out-of-category leads for routing, separately from findings.

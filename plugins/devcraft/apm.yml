@@ -12,6 +12,7 @@ dependencies:
   mcp: []
 includes:
   - .apm/agents
+  - .apm/skills/devcraft-plan
   - .apm/skills/devcraft-code
   - .apm/skills/devcraft-review
 scripts: {}
